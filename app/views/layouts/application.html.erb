@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>YcStartupGenerator</title>
+    <title>WhyCombinator</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -9,14 +9,28 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css"
+      rel="stylesheet"
+    />
   </head>
 
   <body class="bg-gray-100">
-    <main class="min-h-screen flex items-center justify-center px-6 py-12">
+    <main class="min-h-screen flex items-center justify-center px-3 py-6">
       <div class="flex flex-wrap justify-center items-start gap-8">
         <!-- Placeholder for the form and idea display containers -->
         <%= yield %>
       </div>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
+    <script>
+      new TomSelect('#select-industry', {
+        maxItems: 3,
+      });
+
+      new TomSelect('#select-location', {
+        maxItems: 3,
+      });
+    </script>
   </body>
 </html>

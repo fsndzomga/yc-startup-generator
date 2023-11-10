@@ -2,20 +2,13 @@
   <div class="flex flex-wrap justify-center items-start gap-8">
     <!-- Form container -->
     <div class="w-full max-w-2xl p-8 bg-white shadow-md rounded-lg">
-      <h1 class="text-4xl font-bold text-center text-gray-900 mb-4">Welcome to WhyC App</h1>
+      <h1 class="text-4xl font-bold text-center text-gray-900 mb-4">Welcome to WhyCombinator</h1>
       <p class="text-base text-gray-700 text-center mb-8">
         Generate startup ideas inspired by Y Combinator and embark on your entrepreneurial journey!
+        WhyCombinator helps you identify unicorn-type startup ideas. Try now !
       </p>
       <!-- Render the form partial -->
       <%= render 'ideas/form' %>
-    </div>
-
-    <!-- Idea display container -->
-    <div class="w-full max-w-2xl p-8 bg-white shadow-md rounded-lg h-full">
-      <h2 class="text-3xl font-semibold text-center text-gray-900 mb-4"></h2>
-      <div id="idea_output" class="h-full flex flex-col justify-center">
-        <!-- Generated idea will be inserted here -->
-      </div>
     </div>
   </div>
 </div>

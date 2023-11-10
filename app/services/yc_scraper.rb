@@ -2,6 +2,7 @@ require 'nokogiri'
 require 'selenium-webdriver'
 require 'webdrivers'
 require 'yaml'
+require 'json'
 
 chromedriver_path = '/Users/fsndzomga/Downloads/chromedriver-mac-arm64/chromedriver'
 Selenium::WebDriver::Chrome::Service.driver_path = chromedriver_path
@@ -49,13 +50,43 @@ class YcScraper
     end
   end
 
-  def self.scrape_startups
-    counter = 0
-    driver = setup_driver
-    driver.navigate.to(YC_BASE_URL + YC_COMPANIES_PATH)
+  def self.generate_batch_params(year)
+    # Formats the year with leading zeros if less than 10
+    summer_batch = year < 10 ? "S0#{year}" : "S#{year}"
+    winter_batch = year < 10 ? "W0#{year}" : "W#{year}"
 
-    # Use the refactored scrolling method to ensure all content is loaded
-    scroll_to_load_all_content(driver)
+    [summer_batch, winter_batch]
+  end
+
+
+  def self.scrape_by_batches
+    (5..24).each do |year_suffix|
+      generate_batch_params(year_suffix).each do |batch|
+        driver = setup_driver
+        batch_url = "#{YC_BASE_URL}#{YC_COMPANIES_PATH}?batch=#{batch}"
+        puts batch_url
+        driver.navigate.to(batch_url)
+        # Use the refactored scrolling method to ensure all content is loaded
+        scroll_to_load_all_content(driver)
+        begin
+          scrape_startups(driver) # Make sure this method accepts the driver as an argument
+        rescue => e
+          puts "An error occurred: #{e.message}"
+          puts e.backtrace
+        end
+
+        driver.quit
+
+         # Pause for 10 seconds before starting the next WebDriver session
+        sleep 30
+      end
+    end
+  end
+
+  def self.scrape_startups(driver)
+    counter = 0
+    # driver = setup_driver
+    # driver.navigate.to(YC_BASE_URL + YC_COMPANIES_PATH)
 
     # Parse the page with Nokogiri after scrolling
     doc = Nokogiri::HTML(driver.page_source)
@@ -107,10 +138,15 @@ class YcScraper
       # Write the current state of startups array to the YAML file
       File.open("startups.yml", "a") { |file| file.write(startup_data.to_yaml) }
 
+      # Write the current startup data to the JSON file
+      File.open("startups.json", "a") do |file|
+        file.puts(JSON.generate(startup_data)) # Appends each startup data as a JSON object
+      end
+
       counter += 1
     end
 
-    driver.quit # Make sure to quit the driver to free resources
+    # driver.quit # Make sure to quit the driver to free resources
     puts "Total startups scraped: #{counter}"
   end
 

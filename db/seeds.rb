@@ -7,7 +7,7 @@
 #   Character.create(name: "Luke", movie: movies.first)
 # db/seeds.rb
 
-# Path to the YAML file
+# # Path to the YAML file
 # file_path = Rails.root.join('db', 'startups.yml')
 
 # # Read the file
@@ -63,7 +63,7 @@ def extract_key(line)
 end
 
 def initial_value_for(key)
-  key == :industry ? [] : ''
+  key == :industry ? [] : 'N/A'
 end
 
 def parse_line(current_value, line, key)
