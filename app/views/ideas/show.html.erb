@@ -1,0 +1,11 @@
+<%# app/views/ideas/show.html.erb %>
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+  <div class="max-w-md px-3 py-4 bg-white shadow-lg rounded-lg">
+    <div>
+      <% markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true) %>
+      <%= raw markdown.render(@idea.description) %>
+    </div>
+    <!-- Button to return to the home page -->
+    <%= link_to 'Home', root_path, class: "mt-4 inline-block rounded bg-blue-500 hover:bg-blue-700 text-white py-2 px-4" %>
+  </div>
+</div>

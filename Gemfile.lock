@@ -68,6 +68,7 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.5)
       public_suffix (>= 2.0.2, < 6.0)
+    base64 (0.2.0)
     bindex (0.8.1)
     bootsnap (1.17.0)
       msgpack (~> 1.2)
@@ -89,7 +90,19 @@ GEM
     debug (1.8.0)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
+    dotenv (2.8.1)
+    dotenv-rails (2.8.1)
+      dotenv (= 2.8.1)
+      railties (>= 3.2)
     erubi (1.12.0)
+    event_stream_parser (0.3.0)
+    faraday (2.7.11)
+      base64
+      faraday-net_http (>= 2.0, < 3.1)
+      ruby2_keywords (>= 0.0.4)
+    faraday-multipart (1.0.4)
+      multipart-post (~> 2)
+    faraday-net_http (3.0.2)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.1)
@@ -117,6 +130,7 @@ GEM
     mini_mime (1.1.5)
     minitest (5.20.0)
     msgpack (1.7.2)
+    multipart-post (2.3.0)
     net-imap (0.4.4)
       date
       net-protocol
@@ -174,11 +188,17 @@ GEM
     rake (13.1.0)
     rdoc (6.6.0)
       psych (>= 4.0.0)
+    redcarpet (3.6.0)
     redis (4.8.1)
     regexp_parser (2.8.2)
     reline (0.4.0)
       io-console (~> 0.5)
     rexml (3.2.6)
+    ruby-openai (6.0.1)
+      event_stream_parser (>= 0.3.0, < 1.0.0)
+      faraday (>= 1)
+      faraday-multipart (>= 1)
+    ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     selenium-webdriver (4.15.0)
       rexml (~> 3.2, >= 3.2.5)
@@ -233,6 +253,7 @@ DEPENDENCIES
   capybara
   cssbundling-rails
   debug
+  dotenv-rails
   jbuilder
   jsbundling-rails
   nokogiri
@@ -240,7 +261,9 @@ DEPENDENCIES
   pg
   puma (~> 5.0)
   rails (~> 7.0.8)
+  redcarpet
   redis (~> 4.0)
+  ruby-openai
   selenium-webdriver
   sprockets-rails
   sqlite3 (~> 1.4)
